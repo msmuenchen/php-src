@@ -2565,9 +2565,11 @@ string_copy:
 					ch->handlers->write_header->method = PHP_CURL_IGNORE;
 					break;
 				} else if(ch->handlers->write_header->method == PHP_CURL_IGNORE) {
-					break; //prevent the assign-code later on if user passed NULL and the handler was IGNORE already
+					/* prevent the assign-code later on if user passed NULL and the handler was IGNORE already */
+					break; 
 				} else {
-					php_error_docref(NULL TSRMLS_CC, E_WARNING, "set CURLOPT_HEADERFUNCTION to NULL after it was something other than a callable");
+					php_error_docref(NULL TSRMLS_CC, E_WARNING, "Tried to set CURLOPT_HEADERFUNCTION to NULL after it was something other than a callable");
+					break;
 				}
 			}
 			if (ch->handlers->write_header->func_name) {
